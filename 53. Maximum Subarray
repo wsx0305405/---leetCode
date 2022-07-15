@@ -1,0 +1,24 @@
+class Solution {
+    public int maxSubArray(int[] nums) {
+        // 動態規劃
+        // 確定dp[i]的含意
+        // dp[i]表示index i之前的連續最大子序列和
+        int[] dp = new int[nums.length];
+        
+        // 確定推導關係 dp[i] = dp[i-1] + nums[i]
+        // 如果dp[i-1] > nums[i]則取nums[i]
+        // 得 dp[i] = Math.max(dp[i-1] + nums[i],nums[i])
+        
+        // 初始化陣列 : 因為由前往後推導 因此初始化dp[0]的數值
+        dp[0] = nums[0];
+        int sum = dp[0];
+        
+        // 確定遍歷順序 : 由前往後推導 1 ~ dp.length
+        for(int i = 1;i < nums.length;i++){
+            dp[i] = Math.max(dp[i-1] + nums[i], nums[i]);
+            // 每次更新後比較最大值
+            sum = Math.max(dp[i],sum);
+        }
+        return sum;
+    }
+}
