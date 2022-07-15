@@ -1,0 +1,36 @@
+class Solution {
+    public int minPathSum(int[][] grid) {
+        // 動態規劃
+        // 確認矩陣index的含意
+        // dp[i][j] 表示到達位置i,j的最短路徑
+        int[][] dp = new int[grid.length][grid[0].length]; 
+        
+        // 確定推導關係 dp[i][j] = grid[i][j] + Math.min(dp[i-1][j],dp[i][j-1])
+        // 初始化陣列 : 初始化i和j中路徑只有一條的位置
+        for(int i = 0;i < grid.length;i++){
+            if(i > 0){
+                dp[i][0] = grid[i][0] + dp[i-1][0];
+            }else{
+                dp[i][0] = grid[i][0];
+            }
+            
+        }
+        for(int j = 0;j < grid[0].length;j++){
+            if(j > 0){
+                dp[0][j] = grid[0][j] + dp[0][j-1];
+            }else{
+                dp[0][j] = grid[0][j];
+            } 
+        }
+        
+        // 確定遍歷順序 1 ~ dp.length
+        for(int i = 1;i < dp.length;i++){
+            for(int j = 1;j < dp[i].length;j++){
+                dp[i][j] = grid[i][j] + Math.min(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        
+        return dp[grid.length-1][grid[0].length-1];
+        
+    }
+}
